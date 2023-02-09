@@ -1,8 +1,8 @@
 // Coloque aqui suas actions
 // ACTIONS CREATORS
-import { SAVE_EMAIL } from './actionType';
+import { SAVE_LOGIN_INFO } from './actionType';
 
-export const loginSubmit = () => ({
-  type: SAVE_EMAIL,
-  payload: 'email',
+export const loginSubmit = (payload) => ({
+  type: SAVE_LOGIN_INFO,
+  payload,
 });

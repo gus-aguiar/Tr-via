@@ -1,13 +1,16 @@
-import { SAVE_EMAIL } from '../actions/actionType';
+import { SAVE_LOGIN_INFO } from '../actions/actionType';
 
 const INITIAL_STATE = {
   email: '',
+  userName: '',
+  gravatarImage: '',
+  score: 0,
 };
 
 const loginReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case SAVE_EMAIL:
-    return { ...state, email: action.payload };
+  case SAVE_LOGIN_INFO:
+    return { ...state, ...action.payload };
   default:
     return state;
   }

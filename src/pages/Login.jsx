@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getToken } from '../helpers/apiTrivia';
+import { getToken, getGravatar } from '../helpers/apiTrivia';
+import { loginSubmit } from '../redux/actions';
 
 class Login extends React.Component {
   state = {
@@ -41,7 +42,15 @@ class Login extends React.Component {
     event.preventDefault();
 
     getToken().then(() => {
-      const { history } = this.props;
+      const { email, userName } = this.state;
+
+      const { dispatch, history } = this.props;
+
+      getGravatar(email).then((gravatarImage) => {
+        const loginInfo = { email, userName, gravatarImage };
+
+        dispatch(loginSubmit(loginInfo));
+      });
 
       history.push('/game');
     });

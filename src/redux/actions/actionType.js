@@ -1,1 +1,1 @@
-export const SAVE_EMAIL = 'SAVE-EMAIL';
+export const SAVE_LOGIN_INFO = 'SAVE-LOGIN-INFO';
