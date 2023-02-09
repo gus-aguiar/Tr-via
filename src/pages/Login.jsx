@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getToken } from '../helpers/apiTrivia';
 
 class Login extends React.Component {
@@ -72,6 +73,9 @@ class Login extends React.Component {
           <button type="submit" data-testid="btn-play" disabled={ btnDisable }>
             Play
           </button>
+          <Link to="/settings">
+            <button data-testid="btn-settings">Settings</button>
+          </Link>
         </form>
       </div>
     );
