@@ -1,5 +1,7 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { getToken } from '../helpers/apiTrivia';
 
 class Login extends React.Component {
   state = {
@@ -34,11 +36,21 @@ class Login extends React.Component {
     );
   };
 
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    getToken().then(() => {
+      const { history } = this.props;
+
+      history.push('/game');
+    });
+  };
+
   render() {
     const { email, userName, btnDisable } = this.state;
     return (
       <div>
-        <form>
+        <form onSubmit={ this.handleSubmit }>
           <input
             type="email"
             name="email"
@@ -58,12 +70,18 @@ class Login extends React.Component {
           />
 
           <button type="submit" data-testid="btn-play" disabled={ btnDisable }>
-            Entrar
+            Play
           </button>
         </form>
       </div>
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+}.isRequired;
 
 export default connect()(Login);
