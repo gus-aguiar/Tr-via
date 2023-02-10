@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getToken, getGravatar } from '../helpers/apiTrivia';
+import { getToken } from '../helpers/apiTrivia';
 import { loginSubmit } from '../redux/actions';
 
 class Login extends React.Component {
   state = {
-    email: '',
-    userName: '',
+    gravatarEmail: '',
+    name: '',
     btnDisable: true,
   };
 
@@ -29,9 +29,9 @@ class Login extends React.Component {
         [name]: value,
       },
       () => {
-        const { email, userName } = this.state;
+        const { gravatarEmail, name: userName } = this.state;
         const btnDisable = !(
-          this.validateEmail(email) && this.validateUserName(userName)
+          this.validateEmail(gravatarEmail) && this.validateUserName(userName)
         );
         this.setState({ btnDisable });
       },
@@ -42,40 +42,39 @@ class Login extends React.Component {
     event.preventDefault();
 
     getToken().then(() => {
-      const { email, userName } = this.state;
+      const { gravatarEmail, name } = this.state;
 
       const { dispatch, history } = this.props;
 
-      getGravatar(email).then((gravatarImage) => {
-        const loginInfo = { email, userName, gravatarImage };
+      const loginInfo = { name, gravatarEmail };
 
-        dispatch(loginSubmit(loginInfo));
-      });
+      // TODO: verificar caso de problema com o teste (alterar para localStorage)
+      dispatch(loginSubmit(loginInfo));
 
       history.push('/game');
     });
   };
 
   render() {
-    const { email, userName, btnDisable } = this.state;
+    const { gravatarEmail, name, btnDisable } = this.state;
     return (
       <div>
         <form onSubmit={ this.handleSubmit }>
           <input
             type="email"
-            name="email"
+            name="gravatarEmail"
             data-testid="input-gravatar-email"
             placeholder="Email"
-            value={ email }
+            value={ gravatarEmail }
             onChange={ this.handleChange }
           />
 
           <input
             type="text"
-            name="userName"
+            name="name"
             data-testid="input-player-name"
             placeholder="User Name"
-            value={ userName }
+            value={ name }
             onChange={ this.handleChange }
           />
 

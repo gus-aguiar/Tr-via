@@ -1,19 +1,22 @@
-import { SAVE_LOGIN_INFO } from '../actions/actionType';
+import { SAVE_LOGIN_INFO, INCREMENT_ASSERTIONS } from '../actions/actionType';
 
 const INITIAL_STATE = {
-  email: '',
-  userName: '',
-  gravatarImage: '',
+  name: '',
+  gravatarEmail: '',
+  assertions: 0,
   score: 0,
 };
 
-const loginReducer = (state = INITIAL_STATE, action) => {
+const playerReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case SAVE_LOGIN_INFO:
     return { ...state, ...action.payload };
+  case INCREMENT_ASSERTIONS: {
+    return { ...state, assertions: state.assertions + 1 };
+  }
   default:
     return state;
   }
 };
 
-export default loginReducer;
+export default playerReducer;

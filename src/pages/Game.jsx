@@ -3,11 +3,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { getQuestions } from '../helpers/apiTrivia';
+import { incrementAssertions } from '../redux/actions';
 
 class Game extends React.Component {
   state = {
     questions: [],
     questionNumber: 0,
+    questionAnswered: false,
   };
 
   componentDidMount() {
@@ -54,8 +56,30 @@ class Game extends React.Component {
     });
   };
 
-  render() {
+  handleClickNextBtn = () => {
     const { questions, questionNumber } = this.state;
+    this.incrementNumberQuestion();
+
+    this.setState({ questionAnswered: false });
+
+    if (questions.length - 1 === questionNumber) {
+      const { history } = this.props;
+      history.push('/feedback');
+    }
+  };
+
+  checkCorrectAnswer = (answer, correctAnswer) => {
+    const { dispatch } = this.props;
+
+    this.setState({ questionAnswered: true });
+
+    if (answer === correctAnswer) {
+      dispatch(incrementAssertions());
+    }
+  };
+
+  render() {
+    const { questions, questionNumber, questionAnswered } = this.state;
     return (
       <div>
         <Header />
@@ -74,7 +98,7 @@ class Game extends React.Component {
                   {answers.map((answer) => (
                     <button
                       key={ answer }
-                      onClick={ this.incrementNumberQuestion }
+                      onClick={ () => this.checkCorrectAnswer(answer, correctAnswer) }
                       data-testid={
                         answer === correctAnswer
                           ? 'correct-answer'
@@ -84,6 +108,15 @@ class Game extends React.Component {
                       {answer}
                     </button>
                   ))}
+                  {questionAnswered && (
+                    <button
+                      type="button"
+                      data-testid="btn-next"
+                      onClick={ this.handleClickNextBtn }
+                    >
+                      Next
+                    </button>
+                  )}
                 </div>
               </div>
             ),

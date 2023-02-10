@@ -2,10 +2,23 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { getGravatar } from '../helpers/apiTrivia';
 
 class Header extends React.Component {
+  state = {
+    gravatarImage: '',
+  };
+
+  componentDidMount() {
+    const { gravatarEmail } = this.props;
+    getGravatar(gravatarEmail).then((response) => {
+      this.setState({ gravatarImage: response });
+    });
+  }
+
   render() {
-    const { name, gravatarImage, score } = this.props;
+    const { name, score } = this.props;
+    const { gravatarImage } = this.state;
     return (
       <div>
         <h1>Header</h1>
@@ -30,15 +43,15 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-  gravatarImage: PropTypes.any,
+  gravatarEmail: PropTypes.any,
   name: PropTypes.any,
   score: PropTypes.any,
 }.isRequired;
 
-const mapStateToProps = ({ user }) => ({
-  name: user.userName,
-  gravatarImage: user.gravatarImage,
-  score: user.score,
+const mapStateToProps = ({ player }) => ({
+  name: player.name,
+  gravatarEmail: player.gravatarEmail,
+  score: player.score,
 });
 
 export default connect(mapStateToProps)(Header);
