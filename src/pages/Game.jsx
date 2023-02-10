@@ -1,15 +1,18 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { incrementAssertions, timerCounter } from '../redux/actions';
 import Header from '../components/Header';
+import Timer from '../components/Timer';
 import { getQuestions } from '../helpers/apiTrivia';
-import { incrementAssertions } from '../redux/actions';
+import styles from '../styles/Game.module.css';
 
 class Game extends React.Component {
   state = {
     questions: [],
     questionNumber: 0,
     questionAnswered: false,
+    timeout: false,
   };
 
   componentDidMount() {
@@ -39,11 +42,27 @@ class Game extends React.Component {
     });
   }
 
+  componentDidUpdate(prevProps) {
+    const { timer } = this.props;
+    const { questionAnswered } = this.state;
+
+    if (timer === 0 && !questionAnswered && prevProps.timer !== 0) {
+      this.setState({ timeout: true });
+    }
+  }
+
   shuffle = (corret, incorret) => {
     const array = [corret, ...incorret];
     const compareNumber = 0.5;
     const shuffledArray = array.sort(() => Math.random() - compareNumber);
     return shuffledArray;
+  };
+
+  resetTimer = () => {
+    const { dispatch } = this.props;
+    const resetTimerValue = 30;
+    dispatch(timerCounter(resetTimerValue));
+    this.setState({ timeout: false });
   };
 
   incrementNumberQuestion = () => {
@@ -60,6 +79,7 @@ class Game extends React.Component {
     const { questions, questionNumber } = this.state;
     this.incrementNumberQuestion();
 
+    this.resetTimer();
     this.setState({ questionAnswered: false });
 
     if (questions.length - 1 === questionNumber) {
@@ -71,7 +91,7 @@ class Game extends React.Component {
   checkCorrectAnswer = (answer, correctAnswer) => {
     const { dispatch } = this.props;
 
-    this.setState({ questionAnswered: true });
+    this.setState({ timeout: false, questionAnswered: true });
 
     if (answer === correctAnswer) {
       dispatch(incrementAssertions());
@@ -79,7 +99,7 @@ class Game extends React.Component {
   };
 
   render() {
-    const { questions, questionNumber, questionAnswered } = this.state;
+    const { questions, questionNumber, questionAnswered, timeout } = this.state;
     return (
       <div>
         <Header />
@@ -95,26 +115,37 @@ class Game extends React.Component {
                 <h2 data-testid="question-category">{category}</h2>
                 <p data-testid="question-text">{question}</p>
                 <div data-testid="answer-options">
-                  {answers.map((answer) => (
-                    <button
-                      key={ answer }
-                      onClick={ () => this.checkCorrectAnswer(answer, correctAnswer) }
-                      className={
-                        questionAnswered
-                          && (answer === correctAnswer
+                  <Timer
+                    questionAnswered={ questionAnswered }
+                    timeout={ timeout }
+                  />
+                  {answers.map((answer) => {
+                    let className;
+                    if (questionAnswered || timeout) {
+                      className = answer === correctAnswer
+                        ? styles.correct
+                        : styles.wrong;
+                    } else {
+                      className = '';
+                    }
+
+                    return (
+                      <button
+                        key={ answer }
+                        onClick={ () => this.checkCorrectAnswer(answer, correctAnswer) }
+                        className={ className }
+                        disabled={ timeout }
+                        data-testid={
+                          answer === correctAnswer
                             ? 'correct-answer'
-                            : 'wrong-answer')
-                      }
-                      data-testid={
-                        answer === correctAnswer
-                          ? 'correct-answer'
-                          : `wrong-answer-${index}`
-                      }
-                    >
-                      {answer}
-                    </button>
-                  ))}
-                  {questionAnswered && (
+                            : `wrong-answer-${index}`
+                        }
+                      >
+                        {answer}
+                      </button>
+                    );
+                  })}
+                  {(questionAnswered || timeout) && (
                     <button
                       type="button"
                       data-testid="btn-next"
@@ -139,4 +170,8 @@ Game.propTypes = {
   }),
 }.isRequired;
 
-export default connect()(Game);
+const mapStateToProps = ({ timer }) => ({
+  timer: timer.timer,
+});
+
+export default connect(mapStateToProps)(Game);
