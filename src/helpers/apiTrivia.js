@@ -14,3 +14,11 @@ export const getGravatar = async (email) => {
 
   return gravatarImage;
 };
+
+export const getQuestions = async (numberQuestions, token) => {
+  const response = await fetch(
+    `https://opentdb.com/api.php?amount=${numberQuestions}&token=${token}`,
+  );
+  const data = await response.json();
+  return data;
+};

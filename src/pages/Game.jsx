@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
+import { getQuestions } from '../helpers/apiTrivia';
 
 class Game extends React.Component {
   state = {
@@ -10,8 +11,30 @@ class Game extends React.Component {
   };
 
   componentDidMount() {
+    const { history } = this.props;
+
     const numberQuestions = 5;
-    this.getQuestions(numberQuestions);
+    const token = localStorage.getItem('token');
+
+    getQuestions(numberQuestions, token).then((data) => {
+      const { results, response_code: responseCode } = data;
+
+      const newResults = results.map((result) => {
+        const {
+          correct_answer: correctAnswer,
+          incorrect_answers: incorrectAnswers,
+        } = result;
+        const answers = this.shuffle(correctAnswer, incorrectAnswers);
+        return { ...result, answers };
+      });
+
+      const errorCode = 3;
+      if (responseCode === errorCode) {
+        history.push('/');
+      } else {
+        this.setState({ questions: newResults });
+      }
+    });
   }
 
   shuffle = (corret, incorret) => {
@@ -19,32 +42,6 @@ class Game extends React.Component {
     const compareNumber = 0.5;
     const shuffledArray = array.sort(() => Math.random() - compareNumber);
     return shuffledArray;
-  };
-
-  getQuestions = async (numberQuestions) => {
-    const { history } = this.props;
-    const token = localStorage.getItem('token');
-
-    const apiData = await fetch(
-      `https://opentdb.com/api.php?amount=${numberQuestions}&token=${token}`,
-    );
-    const apiJson = await apiData.json();
-    const { results, response_code: responseCode } = apiJson;
-
-    const newResults = results.map((result) => {
-      const {
-        correct_answer: correctAnswer,
-        incorrect_answers: incorrectAnswers,
-      } = result;
-      const answers = this.shuffle(correctAnswer, incorrectAnswers);
-      return { ...result, answers };
-    });
-    const errorCode = 3;
-    if (responseCode === errorCode) {
-      history.push('/');
-    } else {
-      this.setState({ questions: newResults });
-    }
   };
 
   incrementNumberQuestion = () => {
