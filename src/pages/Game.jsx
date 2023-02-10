@@ -1,7 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { incrementAssertions, timerCounter } from '../redux/actions';
+import {
+  incrementAssertions,
+  scoreCounter,
+  timerCounter,
+} from '../redux/actions';
 import Header from '../components/Header';
 import Timer from '../components/Timer';
 import { getQuestions } from '../helpers/apiTrivia';
@@ -88,13 +92,32 @@ class Game extends React.Component {
     }
   };
 
-  checkCorrectAnswer = (answer, correctAnswer) => {
+  getDifficulty = (difficulty) => {
+    const difficultyNumber = {
+      easy: 1,
+      medium: 2,
+      hard: 3,
+    };
+    return difficultyNumber[difficulty];
+  };
+
+  calculateScore = (difficulty) => {
+    const { timer } = this.props;
+    const difficultyNumber = this.getDifficulty(difficulty);
+    const magicNumber = 10;
+    return magicNumber + timer * difficultyNumber;
+  };
+
+  checkCorrectAnswer = (answer, correctAnswer, difficulty) => {
     const { dispatch } = this.props;
+
+    const totalScore = this.calculateScore(difficulty);
 
     this.setState({ timeout: false, questionAnswered: true });
 
     if (answer === correctAnswer) {
       dispatch(incrementAssertions());
+      dispatch(scoreCounter(totalScore));
     }
   };
 
@@ -108,7 +131,13 @@ class Game extends React.Component {
         <div>
           {questions.map(
             (
-              { category, question, answers, correct_answer: correctAnswer },
+              {
+                category,
+                question,
+                answers,
+                difficulty,
+                correct_answer: correctAnswer,
+              },
               index,
             ) => index === questionNumber && (
               <div key={ category + question }>
@@ -132,7 +161,11 @@ class Game extends React.Component {
                     return (
                       <button
                         key={ answer }
-                        onClick={ () => this.checkCorrectAnswer(answer, correctAnswer) }
+                        onClick={ () => this.checkCorrectAnswer(
+                          answer,
+                          correctAnswer,
+                          difficulty,
+                        ) }
                         className={ className }
                         disabled={ timeout }
                         data-testid={

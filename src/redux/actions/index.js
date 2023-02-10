@@ -4,6 +4,7 @@ import {
   SAVE_LOGIN_INFO,
   INCREMENT_ASSERTIONS,
   TIMER_COUNTER,
+  SCORE_COUNTER,
 } from './actionType';
 
 export const loginSubmit = (payload) => ({
@@ -17,5 +18,10 @@ export const incrementAssertions = () => ({
 
 export const timerCounter = (payload) => ({
   type: TIMER_COUNTER,
+  payload,
+});
+
+export const scoreCounter = (payload) => ({
+  type: SCORE_COUNTER,
   payload,
 });
