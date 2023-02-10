@@ -99,6 +99,12 @@ class Game extends React.Component {
                     <button
                       key={ answer }
                       onClick={ () => this.checkCorrectAnswer(answer, correctAnswer) }
+                      className={
+                        questionAnswered
+                          && (answer === correctAnswer
+                            ? 'correct-answer'
+                            : 'wrong-answer')
+                      }
                       data-testid={
                         answer === correctAnswer
                           ? 'correct-answer'
