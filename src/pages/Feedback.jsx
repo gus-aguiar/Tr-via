@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import Header from '../components/Header';
 
 class Feedback extends React.Component {
   state = {};
@@ -19,6 +20,7 @@ class Feedback extends React.Component {
         <p data-testid="feedback-text">
           {assertions < minAssertions ? 'Could be better...' : 'Well Done!'}
         </p>
+        <Header />
       </div>
     );
   }
