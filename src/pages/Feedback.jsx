@@ -3,9 +3,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
+import { getGravatar } from '../helpers/apiTrivia';
 
 class Feedback extends React.Component {
   state = {};
+
+  handleRaking = () => {
+    const { name, score, email } = this.props;
+    const ranking = JSON.parse(localStorage.getItem('ranking')) || [];
+    getGravatar(email).then((response) => {
+      const newRanking = [...ranking, { name, score, picture: response }];
+      localStorage.setItem('ranking', JSON.stringify(newRanking));
+    });
+  };
 
   render() {
     const { assertions, score } = this.props;
@@ -28,7 +38,12 @@ class Feedback extends React.Component {
           </Link>
 
           <Link to="/ranking">
-            <button data-testid="btn-ranking">Ranking</button>
+            <button
+              data-testid="btn-ranking"
+              onClick={ this.handleRaking }
+            >
+              Ranking
+            </button>
           </Link>
         </div>
       </>
@@ -44,6 +59,8 @@ Feedback.propTypes = {
 const mapStateToProps = ({ player }) => ({
   assertions: player.assertions,
   score: player.score,
+  name: player.name,
+  email: player.gravatarEmail,
 });
 
 export default connect(mapStateToProps)(Feedback);

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import sanitize from 'sanitize-html';
 import {
   incrementAssertions,
   scoreCounter,
@@ -121,6 +122,8 @@ class Game extends React.Component {
     }
   };
 
+  fixEntities = (string) => sanitize(string);
+
   render() {
     const { questions, questionNumber, questionAnswered, timeout } = this.state;
     return (
@@ -141,8 +144,12 @@ class Game extends React.Component {
               index,
             ) => index === questionNumber && (
               <div key={ category + question }>
-                <h2 data-testid="question-category">{category}</h2>
-                <p data-testid="question-text">{question}</p>
+                <h2 data-testid="question-category">
+                  {this.fixEntities(category)}
+                </h2>
+                <p data-testid="question-text">
+                  {this.fixEntities(question)}
+                </p>
                 <div data-testid="answer-options">
                   <Timer
                     questionAnswered={ questionAnswered }
@@ -174,7 +181,7 @@ class Game extends React.Component {
                             : `wrong-answer-${index}`
                         }
                       >
-                        {answer}
+                        {this.fixEntities(answer)}
                       </button>
                     );
                   })}
