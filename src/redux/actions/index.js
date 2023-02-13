@@ -5,6 +5,7 @@ import {
   INCREMENT_ASSERTIONS,
   TIMER_COUNTER,
   SCORE_COUNTER,
+  RESET_SCORE,
 } from './actionType';
 
 export const loginSubmit = (payload) => ({
@@ -24,4 +25,8 @@ export const timerCounter = (payload) => ({
 export const scoreCounter = (payload) => ({
   type: SCORE_COUNTER,
   payload,
+});
+
+export const resetScore = () => ({
+  type: RESET_SCORE,
 });

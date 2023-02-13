@@ -2,6 +2,7 @@ import {
   SAVE_LOGIN_INFO,
   INCREMENT_ASSERTIONS,
   SCORE_COUNTER,
+  RESET_SCORE,
 } from '../actions/actionType';
 
 const INITIAL_STATE = {
@@ -20,6 +21,9 @@ const playerReducer = (state = INITIAL_STATE, action) => {
   }
   case SCORE_COUNTER:
     return { ...state, score: state.score + action.payload };
+
+  case RESET_SCORE:
+    return { ...state, score: 0 };
 
   default:
     return state;

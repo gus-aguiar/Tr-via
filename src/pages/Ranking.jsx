@@ -1,7 +1,8 @@
 // Esse botão deve possuir o atributo data-testid com o valor btn-go-home
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { resetScore } from '../redux/actions';
 
 class Ranking extends Component {
   state = {
@@ -20,7 +21,7 @@ class Ranking extends Component {
 
   rankingMap = () => {
     const { ranking } = this.state;
-    return ranking.map(({ name, score, picture, index }) => (
+    return ranking.map(({ name, score, picture }, index) => (
       <div key={ index }>
         <p data-testid={ `player-name-${index}` }>{name}</p>
         <p data-testid={ `player-score-${index}` }>{score}</p>
@@ -29,21 +30,32 @@ class Ranking extends Component {
     ));
   };
 
+  handleClick = () => {
+    const { history, dispatch } = this.props;
+    dispatch(resetScore());
+
+    history.push('/');
+  };
+
   render() {
     return (
-
       <div>
         {this.rankingMap()}
         <h1 data-testid="ranking-title"> Ranking </h1>
-        <Link to="/">
-          <button data-testid="btn-go-home">
-            Jogar Novamente
-          </button>
-        </Link>
+        <button data-testid="btn-go-home" onClick={ this.handleClick }>
+          Jogar Novamente
+        </button>
       </div>
     );
   }
 }
+
+Ranking.propTypes = {
+  dispatch: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+}.isRequired;
 
 const mapStateToProps = (state) => ({
   player: state.player,
