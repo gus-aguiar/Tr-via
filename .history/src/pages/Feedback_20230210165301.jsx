@@ -1,10 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 class Feedback extends React.Component {
   state = {};
+
+  handleRanking = () => {
+    const { history } = this.props;
+    history.push('/ranking');
+  };
 
   render() {
     const { assertions, score } = this.props;
@@ -20,19 +24,12 @@ class Feedback extends React.Component {
         <p data-testid="feedback-text">
           {assertions < minAssertions ? 'Could be better...' : 'Well Done!'}
         </p>
-
-        <Link to="/ranking">
-          <button data-testid="btn-ranking">
-            Ranking
-          </button>
-        </Link>
-
-        <Link to="/">
-          <button data-testid="btn-play-again">
-            Play Again
-          </button>
-        </Link>
-
+        <button
+          data-testid="btn-ranking"
+          onClick={ this.handleRanking }
+        >
+          Ranking
+        </button>
       </div>
     );
   }
