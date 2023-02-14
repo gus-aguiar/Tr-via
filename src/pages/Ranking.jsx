@@ -44,6 +44,9 @@ class Ranking extends Component {
     return (
       <div className={ styles.rankingPageContainer }>
         <div className={ styles.rakingBackground }>
+          <div className={ styles.imgContainer }>
+            <img alt="trivia-logo" className={ styles.triviaLogo } />
+          </div>
           <h1 data-testid="ranking-title"> Ranking </h1>
           <div className={ styles.scoresContainer }>{this.rankingMap()}</div>
           <button
