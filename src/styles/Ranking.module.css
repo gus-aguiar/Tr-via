@@ -148,7 +148,8 @@
   .playerScoreContainer {
     border-end-end-radius: 100px;
     border-end-start-radius: 100px;
-    border-radius: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     width: 100%;
   }
