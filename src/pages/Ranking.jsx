@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { resetScore } from '../redux/actions';
+import styles from '../styles/Ranking.module.css';
 
 class Ranking extends Component {
   state = {
@@ -18,10 +19,16 @@ class Ranking extends Component {
   rankingMap = () => {
     const { ranking } = this.state;
     return ranking.map(({ name, score, picture }, index) => (
-      <div key={ index }>
-        <p data-testid={ `player-name-${index}` }>{name}</p>
-        <p data-testid={ `player-score-${index}` }>{score}</p>
-        <img src={ picture } alt={ name } />
+      <div className={ styles.rankingScore } key={ index }>
+        <div className={ styles.nameContainer }>
+          <img src={ picture } alt={ name } />
+          <p data-testid={ `player-name-${index}` }>{name}</p>
+        </div>
+        <div className={ styles.playerScoreContainer }>
+          <img alt="start" className={ styles.starIcon } />
+          <span data-testid={ `player-score-${index}` }>{score}</span>
+          <p data-testid={ `player-score-${index}` }>Pontos</p>
+        </div>
       </div>
     ));
   };
@@ -35,12 +42,18 @@ class Ranking extends Component {
 
   render() {
     return (
-      <div>
-        {this.rankingMap()}
-        <h1 data-testid="ranking-title"> Ranking </h1>
-        <button data-testid="btn-go-home" onClick={ this.handleClick }>
-          Jogar Novamente
-        </button>
+      <div className={ styles.rankingPageContainer }>
+        <div className={ styles.rakingBackground }>
+          <h1 data-testid="ranking-title"> Ranking </h1>
+          <div className={ styles.scoresContainer }>{this.rankingMap()}</div>
+          <button
+            className={ styles.playBtn }
+            data-testid="btn-go-home"
+            onClick={ this.handleClick }
+          >
+            Jogar Novamente
+          </button>
+        </div>
       </div>
     );
   }

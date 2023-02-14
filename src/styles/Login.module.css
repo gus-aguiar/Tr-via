@@ -119,31 +119,28 @@ footer {
 }
 
 @keyframes shake {
-  10%,
-  90% {
+
+  10%, 90% {
     transform: translate3d(-1px, 0, 0);
   }
 
-  20%,
-  80% {
+  20%, 80% {
     transform: translate3d(2px, 0, 0);
   }
 
-  30%,
-  50%,
-  70% {
+  30%, 50%, 70% {
     transform: translate3d(-4px, 0, 0);
   }
 
-  40%,
-  60% {
+  40%, 60% {
     transform: translate3d(4px, 0, 0);
   }
 }
 
 /* For screens smaller than 768px (tablets and mobile devices) */
 
-@media (max-width: 767px) {
+@media ( max-width : 767px ) {
+
   .formContainer {
     padding: 20px;
     width: calc(100% - 100px);
