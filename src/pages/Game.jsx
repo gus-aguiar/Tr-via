@@ -127,79 +127,81 @@ class Game extends React.Component {
   render() {
     const { questions, questionNumber, questionAnswered, timeout } = this.state;
     return (
-      <div>
+      <>
         <Header />
-        <h1>Game Page</h1>
-
         <div>
-          {questions.map(
-            (
-              {
-                category,
-                question,
-                answers,
-                difficulty,
-                correct_answer: correctAnswer,
-              },
-              index,
-            ) => index === questionNumber && (
-              <div key={ category + question }>
-                <h2 data-testid="question-category">
-                  {this.fixEntities(category)}
-                </h2>
-                <p data-testid="question-text">
-                  {this.fixEntities(question)}
-                </p>
-                <div data-testid="answer-options">
-                  <Timer
-                    questionAnswered={ questionAnswered }
-                    timeout={ timeout }
-                  />
-                  {answers.map((answer) => {
-                    let className;
-                    if (questionAnswered || timeout) {
-                      className = answer === correctAnswer
-                        ? styles.correct
-                        : styles.wrong;
-                    } else {
-                      className = '';
-                    }
+          <h1>Game Page</h1>
 
-                    return (
+          <div>
+            {questions.map(
+              (
+                {
+                  category,
+                  question,
+                  answers,
+                  difficulty,
+                  correct_answer: correctAnswer,
+                },
+                index,
+              ) => index === questionNumber && (
+                <div key={ category + question }>
+                  <h2 data-testid="question-category">
+                    {this.fixEntities(category)}
+                  </h2>
+                  <p data-testid="question-text">
+                    {this.fixEntities(question)}
+                  </p>
+                  <div data-testid="answer-options">
+                    <Timer
+                      questionAnswered={ questionAnswered }
+                      timeout={ timeout }
+                    />
+                    {answers.map((answer) => {
+                      let className;
+                      if (questionAnswered || timeout) {
+                        className = answer === correctAnswer
+                          ? styles.correct
+                          : styles.wrong;
+                      } else {
+                        className = '';
+                      }
+
+                      return (
+                        <button
+                          key={ answer }
+                          onClick={ () => this.checkCorrectAnswer(
+                            answer,
+                            correctAnswer,
+                            difficulty,
+                          ) }
+                          className={ className }
+                          disabled={ timeout }
+                          data-testid={
+                            answer === correctAnswer
+                              ? 'correct-answer'
+                              : `wrong-answer-${index}`
+                          }
+                        >
+                          {this.fixEntities(answer)}
+                        </button>
+                      );
+                    })}
+                    {(questionAnswered || timeout) && (
                       <button
-                        key={ answer }
-                        onClick={ () => this.checkCorrectAnswer(
-                          answer,
-                          correctAnswer,
-                          difficulty,
-                        ) }
-                        className={ className }
-                        disabled={ timeout }
-                        data-testid={
-                          answer === correctAnswer
-                            ? 'correct-answer'
-                            : `wrong-answer-${index}`
-                        }
+                        type="button"
+                        data-testid="btn-next"
+                        onClick={ this.handleClickNextBtn }
                       >
-                        {this.fixEntities(answer)}
+                        Next
                       </button>
-                    );
-                  })}
-                  {(questionAnswered || timeout) && (
-                    <button
-                      type="button"
-                      data-testid="btn-next"
-                      onClick={ this.handleClickNextBtn }
-                    >
-                      Next
-                    </button>
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
-            ),
-          )}
+              ),
+            )}
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 }

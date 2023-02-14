@@ -1,0 +1,42 @@
+img {
+  border-radius: 9999px;
+  width: 40px;
+}
+
+.headerContainer {
+  align-items: center;
+  background-color: #f1f5f9;
+  display: flex;
+  gap: 150px;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.imageContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.scoreContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.starIcon {
+  content: url('../images/star-icon.svg');
+}
+
+.separator {
+  align-items: center;
+  display: flex;
+  gap: 100px;
+  margin-right: 50px;
+}
+
+.settingsIcon {
+  content: url('../images/settings-icon.svg');
+}

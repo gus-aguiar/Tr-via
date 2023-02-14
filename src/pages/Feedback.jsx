@@ -6,7 +6,13 @@ import Header from '../components/Header';
 import { getGravatar } from '../helpers/apiTrivia';
 
 class Feedback extends React.Component {
-  state = {};
+  state = {
+    picture: '',
+  };
+
+  componentDidMount() {
+    this.getGravatarImage();
+  }
 
   handleRaking = () => {
     const { name, score, email } = this.props;
@@ -17,14 +23,24 @@ class Feedback extends React.Component {
     });
   };
 
+  getGravatarImage = () => {
+    const { email } = this.props;
+    getGravatar(email).then((picture) => {
+      this.setState({ picture });
+    });
+  };
+
   render() {
-    const { assertions, score } = this.props;
+    const { name, assertions, score } = this.props;
+    const { picture } = this.state;
     const minAssertions = 3;
     return (
       <>
         <Header />
         <div>
           <h1>Feedback</h1>
+          <img src={ picture } alt={ name } />
+          <p data-testid="header-player-name">{name}</p>
           <p>
             Numero de respostas acertadas:
             <span data-testid="feedback-total-question">{assertions}</span>
@@ -38,10 +54,7 @@ class Feedback extends React.Component {
           </Link>
 
           <Link to="/ranking">
-            <button
-              data-testid="btn-ranking"
-              onClick={ this.handleRaking }
-            >
+            <button data-testid="btn-ranking" onClick={ this.handleRaking }>
               Ranking
             </button>
           </Link>

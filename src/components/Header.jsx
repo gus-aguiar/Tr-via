@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getGravatar } from '../helpers/apiTrivia';
+import styles from '../styles/Header.module.css';
 
 class Header extends React.Component {
   state = {
@@ -20,23 +21,27 @@ class Header extends React.Component {
     const { name, score } = this.props;
     const { gravatarImage } = this.state;
     return (
-      <div>
-        <h1>Header</h1>
-        <div>
-          <img
-            data-testid="header-profile-picture"
-            src={ gravatarImage }
-            alt="gravatar"
-          />
-          <p data-testid="header-player-name">{name}</p>
-          <p data-testid="header-player-score">
-            Pontos:
-            <span data-testid="header-score">{score}</span>
-          </p>
-          <Link to="/settings">
-            <button data-testid="btn-settings">Settings</button>
-          </Link>
+      <div className={ styles.headerContainer }>
+        <div className={ styles.separator }>
+          <div className={ styles.imageContainer }>
+            <img
+              data-testid="header-profile-picture"
+              src={ gravatarImage }
+              alt="gravatar"
+            />
+            <p data-testid="header-player-name">{name}</p>
+          </div>
+          <div className={ styles.scoreContainer }>
+            <img alt="start" className={ styles.starIcon } />
+            <p data-testid="header-player-score">
+              Pontos:
+              <span data-testid="header-score">{score}</span>
+            </p>
+          </div>
         </div>
+        <Link to="/settings">
+          <img alt="settings" className={ styles.settingsIcon } />
+        </Link>
       </div>
     );
   }

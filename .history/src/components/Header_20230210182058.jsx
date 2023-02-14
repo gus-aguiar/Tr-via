@@ -25,17 +25,17 @@ class Header extends React.Component {
         <h1>Header</h1>
         <div>
           <img
-            data-testid="header-profile-picture"
-            src={ gravatarImage }
-            alt="gravatar"
+            data-testid='header-profile-picture'
+            src={gravatarImage}
+            alt='gravatar'
           />
-          <p data-testid="header-player-name">{name}</p>
-          <p data-testid="header-player-score">
+          <p data-testid='header-player-name'>{name}</p>
+          <p data-testid='header-player-score'>
             Pontos:
-            <span data-testid="header-score">{score}</span>
+            <span data-testid='header-score'>{score}</span>
           </p>
-          <Link to="/settings">
-            <button data-testid="btn-settings">Settings</button>
+          <Link to='/settings'>
+            <button data-testid='btn-settings'>Settings</button>
           </Link>
         </div>
       </div>

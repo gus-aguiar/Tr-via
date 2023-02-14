@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { getToken } from '../helpers/apiTrivia';
 import { loginSubmit } from '../redux/actions';
+import styles from '../styles/Login.module.css';
 
 class Login extends React.Component {
   state = {
@@ -48,43 +48,64 @@ class Login extends React.Component {
 
       const loginInfo = { name, gravatarEmail };
 
-      // TODO: verificar caso de problema com o teste (alterar para localStorage)
       dispatch(loginSubmit(loginInfo));
 
       history.push('/game');
     });
   };
 
+  handleSettings = (event) => {
+    event.preventDefault();
+    const { history } = this.props;
+    history.push('/settings');
+  };
+
   render() {
     const { gravatarEmail, name, btnDisable } = this.state;
     return (
-      <div>
-        <form onSubmit={ this.handleSubmit }>
+      <div className={ styles.loginContainer }>
+        <img className={ styles.logoTrivia } alt="logo-trivia" />
+        <form className={ styles.formContainer } onSubmit={ this.handleSubmit }>
           <input
             type="email"
+            className={ styles.inputsStyle }
             name="gravatarEmail"
             data-testid="input-gravatar-email"
-            placeholder="Email"
+            placeholder="Qual é o Email do seu Gravatar?"
             value={ gravatarEmail }
             onChange={ this.handleChange }
           />
-
           <input
             type="text"
+            className={ styles.inputsStyle }
             name="name"
             data-testid="input-player-name"
-            placeholder="User Name"
+            placeholder="Qual é o seu Name?"
             value={ name }
             onChange={ this.handleChange }
           />
-
-          <button type="submit" data-testid="btn-play" disabled={ btnDisable }>
-            Play
-          </button>
-          <Link to="/settings">
-            <button data-testid="btn-settings">Settings</button>
-          </Link>
+          <div className={ styles.btnContainer }>
+            <button
+              type="submit"
+              className={ styles.loginBtn }
+              data-testid="btn-play"
+              disabled={ btnDisable }
+            >
+              Jogar
+            </button>
+            <button
+              className={ styles.settingsBtn }
+              data-testid="btn-settings"
+              onClick={ this.handleSettings }
+            >
+              <img className={ styles.settingsIcon } alt="settingsIcon" />
+              Configurações
+            </button>
+          </div>
         </form>
+        <footer>
+          <img alt="tybeLogo" />
+        </footer>
       </div>
     );
   }
