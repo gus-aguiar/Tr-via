@@ -16,7 +16,8 @@ class Feedback extends React.Component {
 
   handleRaking = () => {
     const { name, score, email } = this.props;
-    const ranking = JSON.parse(localStorage.getItem('ranking')) || [];
+    const ranking = JSON.parse(localStorage.getItem('ranking') || '[]');
+    console.log(ranking);
     getGravatar(email).then((response) => {
       const newRanking = [...ranking, { name, score, picture: response }];
       localStorage.setItem('ranking', JSON.stringify(newRanking));
