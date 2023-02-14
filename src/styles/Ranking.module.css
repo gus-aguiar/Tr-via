@@ -107,36 +107,31 @@
   transform: scale(0.95);
 }
 
-@media screen and ( max-width : 1480px ) {
-
+@media screen and (max-width: 1480px) {
   .rakingBackground {
     width: 40%;
   }
 }
 
-@media screen and ( max-width : 1160px ) {
-
+@media screen and (max-width: 1160px) {
   .rakingBackground {
     width: 50%;
   }
 }
 
-@media screen and ( max-width : 920px ) {
-
+@media screen and (max-width: 920px) {
   .rakingBackground {
     width: 60%;
   }
 }
 
-@media screen and ( max-width : 780px ) {
-
+@media screen and (max-width: 780px) {
   .rakingBackground {
     width: calc(100% - 50px);
   }
 }
 
-@media screen and ( max-width : 520px ) {
-
+@media screen and (max-width: 520px) {
   .rankingScore {
     align-items: center;
     display: flex;
@@ -146,9 +141,11 @@
   }
 
   .playerScoreContainer {
-    border-end-end-radius: 100px;
-    border-end-start-radius: 100px;
     border-radius: 0;
     width: 100%;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
+    border-end-end-radius: 100px;
+    border-end-start-radius: 100px;
   }
 }
