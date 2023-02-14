@@ -37,6 +37,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  height: 80%;
   overflow: auto;
   padding: 5px;
 }
@@ -106,31 +107,36 @@
   transform: scale(0.95);
 }
 
-@media screen and (max-width: 1480px) {
+@media screen and ( max-width : 1480px ) {
+
   .rakingBackground {
     width: 40%;
   }
 }
 
-@media screen and (max-width: 1160px) {
+@media screen and ( max-width : 1160px ) {
+
   .rakingBackground {
     width: 50%;
   }
 }
 
-@media screen and (max-width: 920px) {
+@media screen and ( max-width : 920px ) {
+
   .rakingBackground {
     width: 60%;
   }
 }
 
-@media screen and (max-width: 780px) {
+@media screen and ( max-width : 780px ) {
+
   .rakingBackground {
     width: calc(100% - 50px);
   }
 }
 
-@media screen and (max-width: 520px) {
+@media screen and ( max-width : 520px ) {
+
   .rankingScore {
     align-items: center;
     display: flex;
