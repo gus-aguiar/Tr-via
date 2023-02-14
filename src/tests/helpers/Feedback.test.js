@@ -6,9 +6,6 @@ import Feedback from '../../pages/Feedback';
 import 'jest-localstorage-mock';
 import App from '../../App';
 
-// beforeEach(() => {
-//   localStorage.clear();
-// });
 
 describe('Tela de Feedback', () => {
   it(' testa se a tela exibe as informações corretas', async () => {
