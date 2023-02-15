@@ -26,7 +26,9 @@ class Timer extends React.Component {
 
     return (
       <section>
-        <h2>{timer}</h2>
+        <img alt="timer-icon" />
+        <p>Tempo:</p>
+        <span>{timer}</span>
       </section>
     );
   }

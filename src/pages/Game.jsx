@@ -128,32 +128,47 @@ class Game extends React.Component {
     return (
       <>
         <Header />
-        <div>
+        <div className={ styles.gameContainer }>
+          {questions.map(
+            (
+              {
+                category,
+                question,
+                answers,
+                difficulty,
+                correct_answer: correctAnswer,
+              },
+              index,
+            ) => index === questionNumber && (
+              <div
+                className={ styles.questionsContainer }
+                key={ category + question }
+              >
+                <div className={ styles.questionsInformations }>
+                  <img className={ styles.triviaLogo } alt="trivia-logo" />
+                  <h2
+                    data-testid="question-category"
+                    dangerouslySetInnerHTML={ {
+                      __html: this.fixEntities(category),
+                    } }
+                  />
+                  <p
+                    data-testid="question-text"
+                    dangerouslySetInnerHTML={ {
+                      __html: this.fixEntities(question),
+                    } }
+                  />
 
-          <div>
-            {questions.map(
-              (
-                {
-                  category,
-                  question,
-                  answers,
-                  difficulty,
-                  correct_answer: correctAnswer,
-                },
-                index,
-              ) => index === questionNumber && (
-                <div key={ category + question }>
-                  <h2 data-testid="question-category">
-                    {this.fixEntities(category)}
-                  </h2>
-                  <p data-testid="question-text">
-                    {this.fixEntities(question)}
-                  </p>
-                  <div data-testid="answer-options">
-                    <Timer
-                      questionAnswered={ questionAnswered }
-                      timeout={ timeout }
-                    />
+                  <Timer
+                    questionAnswered={ questionAnswered }
+                    timeout={ timeout }
+                  />
+                </div>
+                <div className={ styles.answersNextBtn }>
+                  <div
+                    data-testid="answer-options"
+                    className={ styles.answersContainer }
+                  >
                     {answers.map((answer) => {
                       let className;
                       if (questionAnswered || timeout) {
@@ -172,8 +187,8 @@ class Game extends React.Component {
                             correctAnswer,
                             difficulty,
                           ) }
-                          className={ className }
-                          disabled={ timeout }
+                          className={ `${className} ${styles.answer}` }
+                          disabled={ questionAnswered || timeout }
                           data-testid={
                             answer === correctAnswer
                               ? 'correct-answer'
@@ -184,20 +199,25 @@ class Game extends React.Component {
                         </button>
                       );
                     })}
-                    {(questionAnswered || timeout) && (
-                      <button
-                        type="button"
-                        data-testid="btn-next"
-                        onClick={ this.handleClickNextBtn }
-                      >
-                        Next
-                      </button>
-                    )}
                   </div>
+
+                  {(questionAnswered || timeout) && (
+                    <button
+                      type="button"
+                      data-testid="btn-next"
+                      onClick={ this.handleClickNextBtn }
+                      className={ styles.nextBtn }
+                    >
+                      Next
+                    </button>
+                  )}
                 </div>
-              ),
-            )}
-          </div>
+              </div>
+            ),
+          )}
+          <footer className={ styles.footerContainer }>
+            <img className={ styles.trybeLogo } alt="trybe-logo" />
+          </footer>
         </div>
       </>
     );

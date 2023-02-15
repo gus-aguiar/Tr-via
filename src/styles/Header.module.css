@@ -9,7 +9,7 @@ img {
   display: flex;
   gap: 150px;
   justify-content: flex-end;
-  padding: 20px;
+  padding: 40px;
 }
 
 .imageContainer {
@@ -24,6 +24,12 @@ img {
   display: flex;
   flex-direction: row;
   gap: 10px;
+  letter-spacing: 0.12em;
+}
+
+.scoreContainer span {
+  font-weight: 700;
+  margin-left: 5px;
 }
 
 .starIcon {
@@ -39,4 +45,21 @@ img {
 
 .settingsIcon {
   content: url('../images/settings-icon.svg');
+}
+
+@media screen and ( max-width : 768px ) {
+
+  .headerContainer {
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  .scoreContainer {
+    gap: 5px;
+  }
+
+  .separator {
+    gap: 10px;
+    margin-right: 10px;
+  }
 }
