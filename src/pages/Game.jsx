@@ -28,7 +28,6 @@ class Game extends React.Component {
 
     getQuestions(numberQuestions, token).then((data) => {
       const { results, response_code: responseCode } = data;
-
       const newResults = results.map((result) => {
         const {
           correct_answer: correctAnswer,
