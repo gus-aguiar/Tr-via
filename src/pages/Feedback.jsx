@@ -9,7 +9,8 @@ class Feedback extends React.Component {
   state = {
     picture: '',
     message: '',
-    className: '',
+    messageClassName: '',
+    imageClassName: '',
   };
 
   componentDidMount() {
@@ -55,27 +56,33 @@ class Feedback extends React.Component {
     if (assertions < minAssertions) {
       this.setState({
         message: 'Could be better...',
-        className: styles.couldBetter,
+        messageClassName: styles.couldBetter,
+        imageClassName: styles.couldBetterImg,
       });
     } else {
       this.setState({
         message: 'Well Done!',
-        className: styles.wellDone,
+        messageClassName: styles.wellDone,
+        imageClassName: styles.wellDoneImg,
       });
     }
   };
 
   render() {
     const { name, assertions, score } = this.props;
-    const { picture, className, message } = this.state;
+    const { picture, messageClassName, imageClassName, message } = this.state;
 
     return (
       <>
         <Header />
         <div className={ styles.feeedbackContainer }>
           <div className={ styles.feeedbackBackground }>
-            <img src={ picture } alt={ name } className={ styles.gravatarImage } />
-            <div className={ `${styles.nameContainer} ${className}` }>
+            <img
+              src={ picture }
+              alt={ name }
+              className={ `${styles.gravatarImage} ${imageClassName}` }
+            />
+            <div className={ `${styles.nameContainer} ${messageClassName}` }>
               <p data-testid="header-player-name">{name}</p>
               <p data-testid="feedback-text">{message}</p>
             </div>

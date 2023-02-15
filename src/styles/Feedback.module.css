@@ -75,9 +75,7 @@
 }
 
 .gravatarImage {
-  background-color: #2fc18c;
   border-radius: 104.412px;
-  filter: drop-shadow(0 0 9px #2fc18c);
   padding: 2px;
   position: absolute;
   transform: translate(0, -100%);
@@ -95,6 +93,15 @@
   color: #ea5d5d;
 }
 
+.couldBetterImg {
+  filter: drop-shadow(0 0 9px #ea5d5d);
+}
+
+.wellDoneImg {
+  filter: drop-shadow(0 0 9px #2fc18c);
+}
+
 .wellDone {
   color: #2fc18c;
+  filter: drop-shadow(0 0 9px #2fc18c);
 }
