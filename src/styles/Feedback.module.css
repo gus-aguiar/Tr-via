@@ -1,1 +1,100 @@
-/* asdasd */
+.feeedbackContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+  justify-content: center;
+}
+
+.feeedbackBackground {
+  align-items: center;
+  background-color: whitesmoke;
+  border-radius: 10px;
+  box-shadow: 1px 4px 13px 2px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 50px;
+  padding: 80px;
+  position: relative;
+  width: 30%;
+}
+
+.nameContainer {
+  display: grid;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  margin-top: 50px;
+  place-items: center;
+}
+
+.scoreContainer {
+  align-items: center;
+  color: #b5b5b5;
+  font-weight: 600;
+}
+
+.btnContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: space-around;
+  width: 30%;
+}
+
+.playAgainButton {
+  background-color: #2fc18c;
+  border: 0;
+  border-radius: 5px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  color: #f1f5f9;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 700;
+  height: 45px;
+  margin-top: 15px;
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+}
+
+.rankingButton {
+  background-color: #00d5e2;
+  border: 0;
+  border-radius: 5px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  color: #f1f5f9;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 700;
+  height: 45px;
+  margin-top: 15px;
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+}
+
+.gravatarImage {
+  background-color: #2fc18c;
+  border-radius: 104.412px;
+  filter: drop-shadow(0 0 9px #2fc18c);
+  padding: 2px;
+  position: absolute;
+  transform: translate(0, -100%);
+  width: 200px;
+}
+
+.triviaLogo {
+  content: url('../images/trivia-logo.svg');
+  position: absolute;
+  transform: translate(0, -300%);
+  width: 140px;
+}
+
+.couldBetter {
+  color: #ea5d5d;
+}
+
+.wellDone {
+  color: #2fc18c;
+}
