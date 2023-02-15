@@ -2,7 +2,9 @@ import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
 import renderWithRouterAndRedux from '../helpers/renderWithRouterAndRedux';
 import App from '../../App';
+import { rankingHelper } from './rankingHelper';
 // https://robertmarshall.dev/blog/how-to-mock-local-storage-in-jest-tests/
+
 
 describe('Teste componente <Ranking />', () => {
   describe('1. Testa se os elementos do ranking são renderizados corretamente', () => {
@@ -14,6 +16,20 @@ describe('Teste componente <Ranking />', () => {
       }
     }
   }
+  const player = [
+    {
+      "name": "teste2",
+      "score": 0
+  },
+    {
+        "name": "leo",
+        "score": 80
+    },
+    {
+      "name": "teste",
+      "score": 100
+    }
+  ]
     test('1.2 - Verifica se os elementos texto de ranking, pontuação total e o nome do jogador é renderizado', () => {
 
       const MOCK_LOCALSTORAGE = {
@@ -34,17 +50,24 @@ describe('Teste componente <Ranking />', () => {
       expect(score).toBeInTheDocument();
     });
 
-    test('1.3 - Verifica se o botão de jogar novamente direciona para à página de login', () => {
+    test('1.3 - Verifica se o ranking tem a ordem correta ', () => {
 
       localStorage.clear();
-       const { history } = renderWithRouterAndRedux(<App />, MOCK_STATE, '/ranking');
+      localStorage.setItem('ranking', JSON.stringify(rankingHelper))
+      const { history } = renderWithRouterAndRedux(<App />, MOCK_STATE, '/ranking');
+      const diego = screen.getByTestId(`player-name-0`);
+      const suellen = screen.getByTestId(`player-name-1`);
+      expect(diego).toHaveTextContent('Diego');
+      expect (suellen).toHaveTextContent('Suellen');
+      const Button = screen.getByTestId('btn-go-home');
+      expect(Button).toBeInTheDocument();   
+      userEvent.click(Button);
+      const { pathname } = history.location;
+      expect(pathname).toBe('/');
 
-      const btnHome = screen.getByTestId('btn-go-home');
-
-      userEvent.click(btnHome);
-
-      expect(history.location.pathname).toBe('/');
+      
     
     });
   });
+
 });
