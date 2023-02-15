@@ -11,7 +11,7 @@ import Header from '../components/Header';
 import Timer from '../components/Timer';
 import { getQuestions } from '../helpers/apiTrivia';
 import styles from '../styles/Game.module.css';
-//
+
 class Game extends React.Component {
   state = {
     questions: [],
